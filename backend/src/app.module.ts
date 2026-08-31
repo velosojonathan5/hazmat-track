@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { validateEnv } from './config/env.validation.js';
 import { buildTypeOrmOptions } from './config/typeorm.config.js';
 import { AuthModule } from './modules/auth/auth.module.js';
+import { ChecklistModule } from './modules/checklist/checklist.module.js';
 import { HealthModule } from './modules/health/health.module.js';
 
 @Module({
@@ -17,6 +18,7 @@ import { HealthModule } from './modules/health/health.module.js';
       useFactory: buildTypeOrmOptions,
     }),
     AuthModule,
+    ChecklistModule,
     HealthModule,
   ],
 })

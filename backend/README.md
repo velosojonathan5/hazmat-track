@@ -32,6 +32,18 @@ npm run seed
 
 Cria dois usuários de demonstração: `inspector@hazmattrack.demo` / `inspector123` e `manager@hazmattrack.demo` / `manager123`.
 
+## Checklist de veículo
+
+Implementa RF04–RF12 do escopo do MVP (sem upload de foto por item, RF07, que fica para um próximo incremento):
+
+- `GET /checklists/items` — lista os ~35 itens do checklist legal (Documentação, Pessoal, Veículo, Equipamentos, Carga), semeados a partir de `spec/forms/Lista de Verificação - Transporte de Carga Perigosa.xls`
+- `POST /checklists` — submete um checklist preenchido (perfil `inspector`); calcula conformidade e gera não conformidade automaticamente para cada item respondido "não"
+- `GET /checklists` — histórico, filtrável por `vehiclePlate`, `driverId`, `from`/`to`
+- `GET /checklists/:id` e `GET /checklists/:id/pdf` — detalhe e exportação em PDF (gerado com `pdfkit`)
+- `GET /checklists/non-conformities` — fila de pendências geradas pelos checklists
+
+Os itens do checklist são semeados junto com os usuários via `npm run seed`.
+
 ## Rodando localmente
 
 ```bash

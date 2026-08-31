@@ -39,6 +39,6 @@ import { JwtTokenIssuer } from './infrastructure/security/jwt-token-issuer.adapt
     JwtAuthGuard,
     RolesGuard,
   ],
-  exports: [JwtAuthGuard, RolesGuard],
+  exports: [JwtAuthGuard, RolesGuard, GetCurrentUserUseCase],
 })
 export class AuthModule {}
