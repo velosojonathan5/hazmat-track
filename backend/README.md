@@ -18,9 +18,19 @@ src/modules/<modulo>/
   <modulo>.module.ts  # wiring: liga o port à implementação via injeção de dependência
 ```
 
-O módulo `health` (`src/modules/health`) é a referência dessa convenção: define um port (`DatabasePingPort`), um caso de uso que depende só do port, um adapter TypeORM que o implementa, e um controller HTTP. Os próximos módulos (`auth`, `checklist`, `fiscalizacao`, `dashboard` — ver `spec/escopo-mvp.md`) devem seguir o mesmo padrão.
+O módulo `health` (`src/modules/health`) é a referência mais simples dessa convenção: define um port (`DatabasePingPort`), um caso de uso que depende só do port, um adapter TypeORM que o implementa, e um controller HTTP. O módulo `auth` (`src/modules/auth`) estende o mesmo padrão com múltiplos ports (repositório de usuário, hasher de senha, emissor de token) e guards HTTP (`JwtAuthGuard`, `RolesGuard`) reutilizáveis pelos próximos módulos (`checklist`, `fiscalizacao`, `dashboard` — ver `spec/escopo-mvp.md`).
 
-Regra prática: código em `domain/` e `application/` não importa nada de `infrastructure/`, `@nestjs/typeorm` ou `typeorm` — a dependência sempre aponta para dentro (infra → application → domain).
+Regra prática: código em `domain/` e `application/` não importa nada de `infrastructure/`, `@nestjs/typeorm`, `@nestjs/jwt` ou `bcryptjs` — a dependência sempre aponta para dentro (infra → application → domain).
+
+## Autenticação
+
+Login mínimo (RF01–RF03 do escopo do MVP): `POST /auth/login` recebe e-mail/senha e retorna um JWT; `GET /auth/me` (protegido por `JwtAuthGuard` + `RolesGuard`) demonstra como restringir rotas por perfil (`inspector` | `manager`). Não há autocadastro — usuários são criados via seed:
+
+```bash
+npm run seed
+```
+
+Cria dois usuários de demonstração: `inspector@hazmattrack.demo` / `inspector123` e `manager@hazmattrack.demo` / `manager123`.
 
 ## Rodando localmente
 

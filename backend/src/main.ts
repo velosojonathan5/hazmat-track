@@ -16,7 +16,7 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('HazmatTrack API')
-    .setDescription('API da POC de gestão ambiental e transporte de carga perigosa')
+    .setDescription('API for the HazmatTrack environmental compliance and hazmat transport POC')
     .setVersion('0.1.0')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);

@@ -14,7 +14,7 @@ export class TypeOrmDatabasePingAdapter implements DatabasePingPort {
       await this.dataSource.query('SELECT 1');
       return true;
     } catch (error) {
-      this.logger.error('Falha ao verificar conexão com o banco de dados', error);
+      this.logger.error('Failed to check database connection', error);
       return false;
     }
   }

@@ -32,6 +32,14 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   DB_NAME!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  JWT_SECRET!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  JWT_EXPIRES_IN = '1d';
 }
 
 export function validateEnv(config: Record<string, unknown>) {
@@ -41,7 +49,7 @@ export function validateEnv(config: Record<string, unknown>) {
   const errors = validateSync(validated, { skipMissingProperties: false });
 
   if (errors.length > 0) {
-    throw new Error(`Configuração de ambiente inválida: ${errors.toString()}`);
+    throw new Error(`Invalid environment configuration: ${errors.toString()}`);
   }
 
   return validated;

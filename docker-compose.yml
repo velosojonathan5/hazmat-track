@@ -27,6 +27,8 @@ services:
       DB_PASSWORD: hazmat
       DB_NAME: hazmat_track
       CORS_ORIGIN: http://localhost:5173
+      JWT_SECRET: local-dev-secret-change-me
+      JWT_EXPIRES_IN: 1d
     ports:
       - "3000:3000"
     volumes:
