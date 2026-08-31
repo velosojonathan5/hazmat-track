@@ -1,10 +1,11 @@
-import { plainToInstance } from 'class-transformer';
+import { Type, plainToInstance } from 'class-transformer';
 import { IsIn, IsInt, IsNotEmpty, IsString, Max, Min, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
   @IsIn(['development', 'test', 'production'])
   NODE_ENV = 'development';
 
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(65535)
@@ -14,6 +15,7 @@ class EnvironmentVariables {
   @IsNotEmpty()
   DB_HOST!: string;
 
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(65535)
