@@ -26,6 +26,7 @@ services:
       DB_USER: hazmat
       DB_PASSWORD: hazmat
       DB_NAME: hazmat_track
+      CORS_ORIGIN: http://localhost:5173
     ports:
       - "3000:3000"
     volumes:
