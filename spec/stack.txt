@@ -1,0 +1,17 @@
+para esse projeto quero trabalhar com a seguinte stack
+
+Backend
+ - NodeJS V24
+ - NestJS
+ - Postgres
+ - APIs documentadas com Swagger
+ - use clean archtecture separando as camadas de negocio das camadas de banco de dados com estratégia de repository
+
+Frontend
+ - NodeJS V24
+ - React
+ - Use clean archtecture isolando as camadas de negocio
+ - Usar Material Design
+ 
+
+quero usar docker, docker-compose

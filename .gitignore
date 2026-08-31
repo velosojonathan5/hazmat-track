@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+
+# Logs
+npm-debug.log*
+*.log
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# Test coverage
+coverage/
+
+# Vite
+.vite/
+
+# Local Claude Code config
+.claude/

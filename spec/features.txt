@@ -1,0 +1,98 @@
+HazmatTrack - Estrutura Funcional do Sistema
+
+    1. Gestao de Usuarios e Acessos
+Macro funcionalidades:
+        ◦ Cadastro e autenticacao de usuarios (email, senha, biometria - mobile)
+        ◦ Perfis e permissoes (administrador, operador, gestor, motorista, etc.)
+        ◦ Recuperacao e redefinicao de senha
+
+Micro funcionalidades:
+        ◦ Cadastro com validacao por email/SMS
+        ◦ Gerenciamento de perfis (criacao, edicao, exclusao)
+        ◦ Vinculacao de usuarios a empresas/unidades operacionais
+        ◦ Registro de dispositivos conectados e controle de sessoes ativas (até que ponto?)
+        ◦ Politicas de senha (expiracao, forca, historico)
+
+    2. Homologação de Fornecedor
+Macro funcionalidades:
+        ◦ Cadastro de prestadores de serviço de transporte (veículos, tipo de produto)
+        ◦ Upload e consulta de documentos (CNPJ, Licenças, Autorizações e Cadastro) com controle de validade por alerta
+        ◦ Alertas de vencimento de documentos
+
+Micro funcionalidades:
+        ◦ Registro de não conformidades e ocorrências (plano de ação) – conversa com o item 06
+
+    3. Fiscalizacao Ambiental e Registro Fotografico
+Macro funcionalidades:
+        ◦ Registro de vistorias ambientais (com geolocalização, data/hora)
+        ◦ Upload de fotos e videos via app/web
+        ◦ Aplicação da Escala de Ringelmann (registro e classificação de emissão de fumaça preta) – “plus” do Sistema
+        ◦ Histórico de vistorias e evidências
+
+Micro funcionalidades:
+        ◦ Classificação automática/manual de imagens (Escala de Ringelmann)
+        ◦ Associação de registros a veículos e cargas
+        ◦ Comentários e anexos em vistorias
+        ◦ Geracao automatica de laudo/relatório fotografico
+        ◦ Consulta e filtro por período, veiculo, local, tipo de carga
+
+    4. Gestao Documental
+Macro funcionalidades:
+        ◦ Upload, armazenamento e controle de validade de documentos (FDS/Ficha de Emergência, CNH, Certificado de Curso MOPP)
+        ◦ Consulta rapida por tipo, veiculo, motorista ou empresa
+
+Micro funcionalidades:
+        ◦ Download e compartilhamento (link seguro)
+
+    5. Checklist de Itens do Veiculo (Carga Perigosa)
+Macro funcionalidades:
+        ◦ Checklist digital de inspecao veicular para cargas perigosas
+        ◦ Verificacao de conformidade segundo numero ONU, ANTT 5998/2022, NBR 7500 e normas Contran
+        ◦ Selecionar por quantidade por veículo e embalagem
+        ◦ Geracao automatica de relatorios de inspeção
+
+Micro funcionalidades:
+        ◦ Selecao do tipo de carga e numero ONU
+        ◦ Checklist dinamico de itens obrigatorios por tipo de produto
+        ◦ Itens de seguranca obrigatorios (EPI, sinalizacao, equipamentos de emergencia, etc.)
+        ◦ Registro fotografico dos itens checados
+        ◦ Alerta de pendencias/nao conformidades
+        ◦ Historico de inspecoes por veiculo
+        ◦ Identificação do inspetor/responsavel
+        ◦ Anexacao de laudos e documentos relacionados (vide item 04)
+        ◦ Geracao de relatorios operacionais por viagem/carga (vide item 04)
+        ◦ 
+
+Exemplos de itens contemplados no checklist:
+        ◦ Equipamentos de emergencia (extintor, calco, cones, etc.)
+        ◦ Documentacao obrigatoria (FDS, licencas)
+        ◦ Sinalizacao e identificacao da carga (rotulos ONU/NBR 7500)
+        ◦ Equipamentos de protecao individual (EPI)
+        ◦ Sistema de comunicacao de emergencia
+        ◦ Estado geral do veiculo (pneus, freios, iluminacao, etc.)
+        ◦ Itens obrigatorios conforme Contran (triangulo, chave de roda, etc.)
+
+    6. Integracoes e APIs
+Macro funcionalidades:
+        ◦ Integracao com sistemas externos (transportadoras, orgaos ambientais, ERP, etc.)
+        ◦ API publica e documentacao para parceiros
+
+    7. Relatórios, Indicadores e Dashboard
+Macro funcionalidades:
+        ◦ Dashboard visual com indicadores chave (cargas, vistorias, ocorrencias, faturamento)
+        ◦ Geracao de relatorios customizaveis (PDF, Excel)
+
+Micro funcionalidades:
+        ◦ Filtros avancados por periodo, tipo de carga, usuário, transportador etc.
+        ◦ Drilldown nos indicadores para detalhes operacionais
+        ◦ Exportacao e compartilhamento de relatorios
+        ◦ Gráficos e infográficos para acompanhamento visual
+
+    8. Configurações e Customização
+Macro funcionalidades:
+        ◦ Parametros do sistema (prazos, templates, notificacoes)
+
+Micro funcionalidades:
+        ◦ Cadastro de unidades, setores, tipos de inspecao, etc.
+        ◦ Gerenciamento de permissoes por tela/funcao
+        ◦ Logs de alterações administrativas
