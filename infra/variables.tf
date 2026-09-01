@@ -63,6 +63,11 @@ variable "neon_api_key" {
   sensitive   = true
 }
 
+variable "neon_org_id" {
+  description = "Neon organization ID. Neon now requires every new project to belong to an org (Organization Settings, or GET /users/me/organizations)."
+  type        = string
+}
+
 variable "neon_region_id" {
   description = "Neon region ID. Pick one close to the Render region to keep query latency low."
   type        = string

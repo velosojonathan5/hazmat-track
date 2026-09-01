@@ -21,7 +21,7 @@ resource "vercel_project" "frontend" {
 # known at plan time (needed for CORS_ORIGIN on the backend, see render.tf).
 resource "vercel_project_domain" "frontend" {
   project_id = vercel_project.frontend.id
-  domain     = "${var.project_name}.vercel.app"
+  domain     = "${local.public_slug}.vercel.app"
 }
 
 resource "vercel_project_environment_variable" "api_url" {

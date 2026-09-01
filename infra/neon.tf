@@ -7,10 +7,10 @@
 # (or check the registry page for the pinned version) and adjust.
 resource "neon_project" "main" {
   name       = var.project_name
+  org_id     = var.neon_org_id
   region_id  = var.neon_region_id
-  pg_version = 16
+  pg_version = 18
 
-  # 0.5 min compute keeps cost at $0 on the free plan; Neon scales/suspends
-  # automatically between requests.
-  history_retention_seconds = 86400
+  # Free plan caps this at 6h regardless of what's requested.
+  history_retention_seconds = 21600
 }

@@ -4,7 +4,7 @@ terraform {
   # Remote state + locking on HCP Terraform (Terraform Cloud), free tier.
   # Create the org/workspace once in app.terraform.io, then update the values below.
   cloud {
-    organization = "REPLACE_WITH_YOUR_TFC_ORG"
+    organization = "hazmat-track"
 
     workspaces {
       name = "hazmat-track"
@@ -41,7 +41,8 @@ provider "vercel" {
 }
 
 provider "render" {
-  api_key = var.render_api_key
+  api_key  = var.render_api_key
+  owner_id = var.render_owner_id
 }
 
 provider "neon" {

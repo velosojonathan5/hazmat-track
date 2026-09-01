@@ -10,20 +10,22 @@ resource "random_password" "jwt_secret" {
 # keeps it always-on; `auto_deploy = true` is what turns every push to
 # github_branch into a deploy — that's the CD for the backend.
 resource "render_web_service" "backend" {
-  name     = local.backend_service_name
-  owner_id = var.render_owner_id
-  plan     = var.render_plan
-  region   = var.render_region
+  name           = local.backend_service_name
+  plan           = var.render_plan
+  region         = var.render_region
+  root_directory = "backend"
+  start_command  = "npm run start:prod"
 
   runtime_source = {
     native_runtime = {
-      repo_url       = "https://github.com/${var.github_repo}"
-      branch         = var.github_branch
-      auto_deploy    = true
-      root_directory = "backend"
-      build_command  = "npm ci && npm run build"
-      start_command  = "npm run start:prod"
-      runtime        = "node"
+      repo_url      = "https://github.com/${var.github_repo}"
+      branch        = var.github_branch
+      auto_deploy   = true
+      # --include=dev is required: NODE_ENV=production (set below, for the app
+      # itself) makes npm skip devDependencies otherwise, including
+      # @nestjs/cli which `nest build` needs.
+      build_command = "npm ci --include=dev && npm run build"
+      runtime       = "node"
     }
   }
 
@@ -36,7 +38,7 @@ resource "render_web_service" "backend" {
     DB_PASSWORD               = { value = neon_project.main.database_password }
     DB_NAME                   = { value = neon_project.main.database_name }
     DB_SSL                    = { value = "true" }
-    CORS_ORIGIN               = { value = "https://${vercel_project_domain.frontend.domain}" }
+    CORS_ORIGIN               = { value = local.frontend_url }
     JWT_SECRET                = { value = random_password.jwt_secret.result }
     JWT_EXPIRES_IN             = { value = "1d" }
     STORAGE_INTERNAL_ENDPOINT = { value = "https://${var.cloudflare_account_id}.r2.cloudflarestorage.com" }

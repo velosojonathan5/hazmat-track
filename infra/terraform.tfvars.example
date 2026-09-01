@@ -15,6 +15,7 @@ render_region    = "oregon"
 render_plan      = "starter"
 
 neon_api_key   = "..."
+neon_org_id    = "..." # GET https://console.neon.tech/api/v2/users/me/organizations
 neon_region_id = "aws-us-east-1"
 
 cloudflare_api_token  = "..."
