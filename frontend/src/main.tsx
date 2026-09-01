@@ -1,10 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { HealthPage } from './presentation/pages/HealthPage';
+import { App } from './presentation/App';
+import { AuthProvider } from './presentation/auth/AuthContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <HealthPage />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </StrictMode>,
 );
