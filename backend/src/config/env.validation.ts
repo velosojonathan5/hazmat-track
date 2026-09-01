@@ -40,6 +40,26 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   JWT_EXPIRES_IN = '1d';
+
+  @IsString()
+  @IsNotEmpty()
+  STORAGE_INTERNAL_ENDPOINT!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  STORAGE_PUBLIC_ENDPOINT!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  STORAGE_ACCESS_KEY!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  STORAGE_SECRET_KEY!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  STORAGE_BUCKET = 'hazmat-track';
 }
 
 export function validateEnv(config: Record<string, unknown>) {
