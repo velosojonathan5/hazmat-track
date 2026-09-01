@@ -1,3 +1,4 @@
+import type { ChecklistCategory } from '../entities/checklist-item-definition.entity.js';
 import type {
   NonConformity,
   NonConformitySourceType,
@@ -9,11 +10,18 @@ export const NON_CONFORMITY_REPOSITORY_PORT = Symbol('NON_CONFORMITY_REPOSITORY_
 export interface NewNonConformity {
   sourceType: NonConformitySourceType;
   sourceId: string;
+  category: ChecklistCategory;
   description: string;
   status: NonConformityStatus;
 }
 
+export interface NonConformityFilters {
+  status?: NonConformityStatus;
+  from?: Date;
+  to?: Date;
+}
+
 export interface NonConformityRepository {
   createMany(items: NewNonConformity[]): Promise<NonConformity[]>;
-  findMany(status?: NonConformityStatus): Promise<NonConformity[]>;
+  findMany(filters: NonConformityFilters): Promise<NonConformity[]>;
 }

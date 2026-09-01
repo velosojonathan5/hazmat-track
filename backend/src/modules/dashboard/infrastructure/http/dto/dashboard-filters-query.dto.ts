@@ -1,16 +1,11 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsISO8601, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsISO8601, IsOptional, IsString } from 'class-validator';
 
-export class ListChecklistsQueryDto {
+export class DashboardFiltersQueryDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   vehiclePlate?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUUID()
-  driverId?: string;
 
   @ApiPropertyOptional()
   @IsOptional()

@@ -26,6 +26,7 @@ export interface NewChecklist {
 export interface ChecklistFilters {
   vehiclePlate?: string;
   driverId?: string;
+  unNumber?: string;
   from?: Date;
   to?: Date;
 }

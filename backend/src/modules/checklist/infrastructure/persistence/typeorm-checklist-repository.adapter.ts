@@ -67,6 +67,7 @@ export class TypeOrmChecklistRepository implements ChecklistRepository {
     const entities = await this.repository.find({
       where: {
         ...(filters.driverId ? { driverId: filters.driverId } : {}),
+        ...(filters.unNumber ? { unNumber: filters.unNumber } : {}),
         ...(vehicleId ? { vehicleId } : {}),
         ...(filters.from && filters.to ? { createdAt: Between(filters.from, filters.to) } : {}),
       },

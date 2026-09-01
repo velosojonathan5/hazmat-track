@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { NonConformity, NonConformityStatus } from '../../domain/entities/non-conformity.entity.js';
+import type { NonConformity } from '../../domain/entities/non-conformity.entity.js';
 import {
   NON_CONFORMITY_REPOSITORY_PORT,
+  type NonConformityFilters,
   type NonConformityRepository,
 } from '../../domain/ports/non-conformity-repository.port.js';
 
@@ -12,7 +13,7 @@ export class ListNonConformitiesUseCase {
     private readonly nonConformityRepository: NonConformityRepository,
   ) {}
 
-  execute(status?: NonConformityStatus): Promise<NonConformity[]> {
-    return this.nonConformityRepository.findMany(status);
+  execute(filters: NonConformityFilters): Promise<NonConformity[]> {
+    return this.nonConformityRepository.findMany(filters);
   }
 }

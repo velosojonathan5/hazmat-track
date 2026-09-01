@@ -129,6 +129,7 @@ describe('SubmitChecklistUseCase', () => {
       {
         sourceType: NonConformitySourceType.CHECKLIST,
         sourceId: 'checklist-1',
+        category: ChecklistCategory.DOCUMENTATION,
         description: '1.1 - Item 1',
         status: NonConformityStatus.OPEN,
       },

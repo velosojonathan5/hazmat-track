@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ChecklistCategory } from '../../../domain/entities/checklist-item-definition.entity.js';
 import {
   NonConformitySourceType,
   NonConformityStatus,
@@ -13,6 +14,9 @@ export class NonConformityResponseDto {
 
   @ApiProperty()
   sourceId!: string;
+
+  @ApiProperty({ enum: ChecklistCategory })
+  category!: ChecklistCategory;
 
   @ApiProperty()
   description!: string;

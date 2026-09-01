@@ -54,5 +54,6 @@ import { VehicleOrmEntity } from './infrastructure/persistence/vehicle.orm-entit
     { provide: NON_CONFORMITY_REPOSITORY_PORT, useClass: TypeOrmNonConformityRepository },
     { provide: CHECKLIST_PDF_GENERATOR_PORT, useClass: PdfKitChecklistPdfGenerator },
   ],
+  exports: [CHECKLIST_REPOSITORY_PORT, NON_CONFORMITY_REPOSITORY_PORT],
 })
 export class ChecklistModule {}

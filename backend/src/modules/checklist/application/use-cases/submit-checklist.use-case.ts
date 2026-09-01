@@ -1,5 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { AnswerValue } from '../../domain/entities/checklist-answer.entity.js';
+import type { ChecklistItemDefinition } from '../../domain/entities/checklist-item-definition.entity.js';
 import { Checklist, ChecklistStatus } from '../../domain/entities/checklist.entity.js';
 import type { Driver } from '../../domain/entities/driver.entity.js';
 import {
@@ -82,7 +83,7 @@ export class SubmitChecklistUseCase {
   private async createNonConformities(
     checklistId: string,
     answers: NewChecklistAnswer[],
-    items: Array<{ id: string; code: string; description: string }>,
+    items: ChecklistItemDefinition[],
   ): Promise<void> {
     const failedItemIds = new Set(
       answers.filter((answer) => answer.answer === AnswerValue.NO).map((answer) => answer.itemDefinitionId),
@@ -96,6 +97,7 @@ export class SubmitChecklistUseCase {
       failedItems.map((item) => ({
         sourceType: NonConformitySourceType.CHECKLIST,
         sourceId: checklistId,
+        category: item.category,
         description: `${item.code} - ${item.description}`,
         status: NonConformityStatus.OPEN,
       })),

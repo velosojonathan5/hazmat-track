@@ -46,7 +46,7 @@ export class ChecklistController {
   @Roles(UserRole.INSPECTOR, UserRole.MANAGER)
   @ApiOkResponse({ type: [NonConformityResponseDto] })
   listNonConformities(@Query() query: ListNonConformitiesQueryDto): Promise<NonConformityResponseDto[]> {
-    return this.listNonConformitiesUseCase.execute(query.status);
+    return this.listNonConformitiesUseCase.execute({ status: query.status });
   }
 
   @Post()
@@ -76,6 +76,7 @@ export class ChecklistController {
     return this.listChecklistsUseCase.execute({
       vehiclePlate: query.vehiclePlate,
       driverId: query.driverId,
+      unNumber: query.unNumber,
       from: query.from ? new Date(query.from) : undefined,
       to: query.to ? new Date(query.to) : undefined,
     });

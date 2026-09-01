@@ -29,5 +29,6 @@ import { TypeOrmInspectionRepository } from './infrastructure/persistence/typeor
     { provide: INSPECTION_REPOSITORY_PORT, useClass: TypeOrmInspectionRepository },
     { provide: INSPECTION_PDF_GENERATOR_PORT, useClass: PdfKitInspectionPdfGenerator },
   ],
+  exports: [INSPECTION_REPOSITORY_PORT],
 })
 export class InspectionModule {}
