@@ -20,6 +20,8 @@ export class S3FileStorageAdapter implements FileStoragePort, OnModuleInit {
 
   constructor(private readonly config: ConfigService) {
     this.bucket = this.config.get<string>('STORAGE_BUCKET')!;
+    // Bucket-rooted: the base URL already resolves to the bucket (e.g. an R2 custom
+    // domain or public dev URL), so keys are appended directly with no bucket segment.
     this.publicEndpoint = this.config.get<string>('STORAGE_PUBLIC_ENDPOINT')!;
     this.client = new S3Client({
       endpoint: this.config.get<string>('STORAGE_INTERNAL_ENDPOINT'),
@@ -68,7 +70,7 @@ export class S3FileStorageAdapter implements FileStoragePort, OnModuleInit {
       }),
     );
 
-    return { key, url: `${this.publicEndpoint}/${this.bucket}/${key}` };
+    return { key, url: `${this.publicEndpoint}/${key}` };
   }
 
   async download(key: string): Promise<Buffer> {

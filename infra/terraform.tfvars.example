@@ -1,0 +1,24 @@
+# Copy to terraform.tfvars (gitignored) and fill in, or set every value as a
+# TF_VAR_<name> environment variable / CI secret instead — never commit real
+# tokens.
+
+project_name  = "hazmat-track"
+github_repo   = "velosojonathan5/hazmat-track"
+github_branch = "main"
+
+vercel_api_token = "..."
+vercel_team_id   = null # or "team_xxxxxxxx"
+
+render_api_key   = "..."
+render_owner_id  = "..." # `render workspace current` with the Render CLI, or from the dashboard URL
+render_region    = "oregon"
+render_plan      = "starter"
+
+neon_api_key   = "..."
+neon_region_id = "aws-us-east-1"
+
+cloudflare_api_token  = "..."
+cloudflare_account_id = "..."
+r2_access_key_id      = "..."
+r2_secret_access_key  = "..."
+r2_public_base_url    = "https://pub-xxxxxxxxxxxx.r2.dev" # set after enabling Public Development URL, see infra/cloudflare.tf

@@ -1,5 +1,5 @@
-import { Type, plainToInstance } from 'class-transformer';
-import { IsIn, IsInt, IsNotEmpty, IsString, Max, Min, validateSync } from 'class-validator';
+import { Transform, Type, plainToInstance } from 'class-transformer';
+import { IsBoolean, IsIn, IsInt, IsNotEmpty, IsString, Max, Min, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
   @IsIn(['development', 'test', 'production'])
@@ -32,6 +32,10 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   DB_NAME!: string;
+
+  @Transform(({ value }) => value === true || value === 'true')
+  @IsBoolean()
+  DB_SSL = false;
 
   @IsString()
   @IsNotEmpty()

@@ -7,6 +7,7 @@ POC de gestão ambiental e compliance para transporte de carga perigosa — chec
 - [`spec/escopo-mvp.md`](spec/escopo-mvp.md) — escopo técnico do MVP: requisitos funcionais e não funcionais, modelo de domínio, fluxos e critérios de aceite
 - [`spec/features.txt`](spec/features.txt) — visão funcional completa do produto (além do MVP)
 - [`spec/forms/`](spec/forms/) — checklist legal de referência usado para modelar o módulo de inspeção veicular
+- [`infra/README.md`](infra/README.md) — deploy em produção (Vercel + Render + Neon + Cloudflare R2) e CD via Terraform
 
 ## Estrutura do repositório
 

@@ -47,7 +47,7 @@ services:
       JWT_SECRET: local-dev-secret-change-me
       JWT_EXPIRES_IN: 1d
       STORAGE_INTERNAL_ENDPOINT: http://storage:9000
-      STORAGE_PUBLIC_ENDPOINT: http://localhost:9000
+      STORAGE_PUBLIC_ENDPOINT: http://localhost:9000/hazmat-track
       STORAGE_ACCESS_KEY: hazmat
       STORAGE_SECRET_KEY: hazmat123
       STORAGE_BUCKET: hazmat-track

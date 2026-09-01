@@ -27,3 +27,10 @@ coverage/
 
 # Local Claude Code config
 .claude/
+
+# Terraform
+infra/.terraform/
+infra/*.tfvars
+!infra/terraform.tfvars.example
+infra/*.tfplan
+crash.log

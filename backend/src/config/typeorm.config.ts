@@ -9,6 +9,7 @@ export function buildTypeOrmOptions(config: ConfigService): TypeOrmModuleOptions
     username: config.get<string>('DB_USER'),
     password: config.get<string>('DB_PASSWORD'),
     database: config.get<string>('DB_NAME'),
+    ssl: config.get<boolean>('DB_SSL') ? { rejectUnauthorized: false } : false,
     autoLoadEntities: true,
     synchronize: config.get<string>('NODE_ENV') !== 'production',
   };
