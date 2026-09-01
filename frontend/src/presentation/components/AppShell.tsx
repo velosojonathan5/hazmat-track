@@ -2,10 +2,16 @@ import { useState, type ReactNode } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import { ChecklistFormPage } from '../pages/ChecklistFormPage';
 import { ChecklistHistoryPage } from '../pages/ChecklistHistoryPage';
+import { DashboardPage } from '../pages/DashboardPage';
 import { InspectionFormPage } from '../pages/InspectionFormPage';
 import { InspectionHistoryPage } from '../pages/InspectionHistoryPage';
 
-type Tab = 'checklist-form' | 'checklist-history' | 'inspection-form' | 'inspection-history';
+type Tab =
+  | 'dashboard'
+  | 'checklist-form'
+  | 'checklist-history'
+  | 'inspection-form'
+  | 'inspection-history';
 
 function TabButton({
   active,
@@ -32,6 +38,7 @@ function TabButton({
 }
 
 const TAB_CONTENT: Record<Tab, ReactNode> = {
+  dashboard: <DashboardPage />,
   'checklist-form': <ChecklistFormPage />,
   'checklist-history': <ChecklistHistoryPage />,
   'inspection-form': <InspectionFormPage />,
@@ -40,10 +47,10 @@ const TAB_CONTENT: Record<Tab, ReactNode> = {
 
 export function AppShell() {
   const { session, logout } = useAuth();
-  const [tab, setTab] = useState<Tab>('checklist-form');
+  const [tab, setTab] = useState<Tab>(session?.user.role === 'manager' ? 'dashboard' : 'checklist-form');
 
   return (
-    <div style={{ maxWidth: 800, margin: '2rem auto', padding: '0 1rem' }}>
+    <div style={{ maxWidth: 960, margin: '2rem auto', padding: '0 1rem' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>HazmatTrack</h1>
         <div>
@@ -57,6 +64,9 @@ export function AppShell() {
       </header>
 
       <nav style={{ margin: '1.5rem 0', borderBottom: '1px solid #ccc', paddingBottom: '0.5rem' }}>
+        <TabButton active={tab === 'dashboard'} onClick={() => setTab('dashboard')}>
+          Dashboard
+        </TabButton>
         <TabButton active={tab === 'checklist-form'} onClick={() => setTab('checklist-form')}>
           Novo Checklist
         </TabButton>
