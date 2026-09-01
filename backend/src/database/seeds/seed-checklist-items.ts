@@ -10,6 +10,7 @@ const dataSource = new DataSource({
   username: process.env.DB_USER ?? 'hazmat',
   password: process.env.DB_PASSWORD ?? 'hazmat',
   database: process.env.DB_NAME ?? 'hazmat_track',
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
   entities: [ChecklistItemDefinitionOrmEntity],
   synchronize: true,
 });
