@@ -35,6 +35,7 @@ export interface NewChecklistAnswer {
   itemDefinitionId: string;
   answer: AnswerValue;
   note?: string;
+  photoUrl?: string;
 }
 
 export interface NewChecklistInput {

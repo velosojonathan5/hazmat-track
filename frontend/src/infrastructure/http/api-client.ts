@@ -42,3 +42,16 @@ export async function apiGetBlob(path: string, options: RequestOptions = {}): Pr
   await assertOk(response, path);
   return response.blob();
 }
+
+export async function apiUploadFile<T>(path: string, file: File, options: RequestOptions = {}): Promise<T> {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    method: 'POST',
+    headers: buildHeaders(options.token),
+    body: formData,
+  });
+  await assertOk(response, path);
+  return response.json() as Promise<T>;
+}

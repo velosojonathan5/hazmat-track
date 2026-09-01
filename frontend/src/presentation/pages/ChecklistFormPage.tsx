@@ -4,7 +4,9 @@ import { CHECKLIST_CATEGORY_LABEL, type ChecklistCategory, type ChecklistItem } 
 import { ListChecklistItemsUseCase } from '../../application/checklist/list-checklist-items.use-case';
 import { SubmitChecklistUseCase } from '../../application/checklist/submit-checklist.use-case';
 import { DownloadChecklistPdfUseCase } from '../../application/checklist/download-checklist-pdf.use-case';
+import { UploadFileUseCase } from '../../application/upload/upload-file.use-case';
 import { HttpChecklistRepository } from '../../infrastructure/checklist/http-checklist-repository';
+import { HttpUploadRepository } from '../../infrastructure/upload/http-upload-repository';
 import { useAuth } from '../auth/AuthContext';
 
 const CATEGORY_ORDER: ChecklistCategory[] = ['documentation', 'personnel', 'vehicle', 'equipment', 'cargo'];
@@ -13,6 +15,8 @@ const ANSWER_OPTIONS: AnswerValue[] = ['yes', 'no', 'not_applicable'];
 interface AnswerState {
   answer: AnswerValue;
   note: string;
+  photoUrl?: string;
+  uploadingPhoto?: boolean;
 }
 
 export function ChecklistFormPage() {
@@ -24,6 +28,8 @@ export function ChecklistFormPage() {
   const listItems = useMemo(() => new ListChecklistItemsUseCase(repository), [repository]);
   const submitChecklist = useMemo(() => new SubmitChecklistUseCase(repository), [repository]);
   const downloadPdf = useMemo(() => new DownloadChecklistPdfUseCase(repository), [repository]);
+  const uploadRepository = useMemo(() => new HttpUploadRepository(session!.accessToken), [session]);
+  const uploadFile = useMemo(() => new UploadFileUseCase(uploadRepository), [uploadRepository]);
 
   const [items, setItems] = useState<ChecklistItem[]>([]);
   const [answers, setAnswers] = useState<Record<string, AnswerState>>({});
@@ -54,6 +60,23 @@ export function ChecklistFormPage() {
     setAnswers((current) => ({ ...current, [itemId]: { ...current[itemId], ...patch } }));
   }
 
+  async function handlePhotoSelected(itemId: string, event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) {
+      return;
+    }
+
+    updateAnswer(itemId, { uploadingPhoto: true });
+    try {
+      const uploaded = await uploadFile.execute(file);
+      updateAnswer(itemId, { photoUrl: uploaded.url, uploadingPhoto: false });
+    } catch {
+      updateAnswer(itemId, { uploadingPhoto: false });
+      setError('Falha ao enviar a foto.');
+    }
+  }
+
   async function handleSubmit() {
     setError(null);
     setSubmitting(true);
@@ -68,6 +91,7 @@ export function ChecklistFormPage() {
           itemDefinitionId: item.id,
           answer: answers[item.id].answer,
           note: answers[item.id].note || undefined,
+          photoUrl: answers[item.id].photoUrl,
         })),
       });
       setResult(checklist);
@@ -196,6 +220,15 @@ export function ChecklistFormPage() {
                     onChange={(event) => updateAnswer(item.id, { note: event.target.value })}
                     style={{ marginLeft: '0.5rem' }}
                   />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => handlePhotoSelected(item.id, event)}
+                    disabled={answers[item.id]?.uploadingPhoto}
+                    style={{ marginLeft: '0.5rem' }}
+                  />
+                  {answers[item.id]?.uploadingPhoto && <span> enviando...</span>}
+                  {answers[item.id]?.photoUrl && <span> ✓ foto anexada</span>}
                 </div>
               </div>
             ))}
