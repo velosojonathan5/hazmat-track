@@ -11,6 +11,9 @@ export function buildTypeOrmOptions(config: ConfigService): TypeOrmModuleOptions
     database: config.get<string>('DB_NAME'),
     ssl: config.get<boolean>('DB_SSL') ? { rejectUnauthorized: false } : false,
     autoLoadEntities: true,
-    synchronize: config.get<string>('NODE_ENV') !== 'production',
+    // No migrations in this codebase yet, so synchronize stays on in every
+    // environment, including production, to create the schema. Switch to
+    // real migrations before this holds production data.
+    synchronize: true,
   };
 }
