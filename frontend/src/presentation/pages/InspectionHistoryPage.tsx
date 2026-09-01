@@ -43,66 +43,69 @@ export function InspectionHistoryPage() {
   }
 
   return (
-    <section>
-      <h2>Histórico de vistorias</h2>
-
-      <div style={{ marginBottom: '1rem' }}>
-        <input
-          placeholder="Filtrar por placa"
-          value={plateFilter}
-          onChange={(event) => setPlateFilter(event.target.value)}
-        />
-        <button type="button" onClick={() => load(plateFilter)} style={{ marginLeft: '0.5rem' }}>
-          Filtrar
-        </button>
+    <div className="stack">
+      <div className="row-between">
+        <h2>Histórico de vistorias</h2>
+        <div className="row">
+          <input placeholder="Filtrar por placa" value={plateFilter} onChange={(event) => setPlateFilter(event.target.value)} />
+          <button type="button" className="btn btn-secondary" onClick={() => load(plateFilter)}>
+            Filtrar
+          </button>
+        </div>
       </div>
 
       {error && (
-        <p role="alert" style={{ color: 'crimson' }}>
+        <p role="alert" className="text-error">
           {error}
         </p>
       )}
 
       {loading && <p>Carregando...</p>}
 
-      {!loading && inspections.length === 0 && <p>Nenhuma vistoria encontrada.</p>}
+      <div className="card" style={{ padding: 0 }}>
+        {!loading && inspections.length === 0 && (
+          <p style={{ padding: 'var(--space-5)' }}>Nenhuma vistoria encontrada.</p>
+        )}
 
-      {!loading && inspections.length > 0 && (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #ccc' }}>
-              <th>Data</th>
-              <th>Placa</th>
-              <th>ONU</th>
-              <th>Ringelmann</th>
-              <th>Evidências</th>
-              <th>Inspetor</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {inspections.map((inspection) => (
-              <tr key={inspection.id} style={{ borderBottom: '1px solid #eee' }}>
-                <td>{new Date(inspection.createdAt).toLocaleString('pt-BR')}</td>
-                <td>{inspection.vehiclePlate}</td>
-                <td>{inspection.unNumber}</td>
-                <td>
-                  {inspection.ringelmannGrade === undefined
-                    ? '—'
-                    : `grau ${inspection.ringelmannGrade} (${RINGELMANN_DENSITY[inspection.ringelmannGrade]})`}
-                </td>
-                <td>{inspection.evidences.length}</td>
-                <td>{inspection.inspectorName}</td>
-                <td>
-                  <button type="button" onClick={() => handleDownloadPdf(inspection.id)}>
-                    PDF
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </section>
+        {!loading && inspections.length > 0 && (
+          <div className="table-wrap">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Placa</th>
+                  <th>ONU</th>
+                  <th>Ringelmann</th>
+                  <th>Evidências</th>
+                  <th>Inspetor</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {inspections.map((inspection) => (
+                  <tr key={inspection.id}>
+                    <td>{new Date(inspection.createdAt).toLocaleString('pt-BR')}</td>
+                    <td>{inspection.vehiclePlate}</td>
+                    <td>{inspection.unNumber}</td>
+                    <td>
+                      {inspection.ringelmannGrade === undefined
+                        ? '—'
+                        : `Grau ${inspection.ringelmannGrade} (${RINGELMANN_DENSITY[inspection.ringelmannGrade]})`}
+                    </td>
+                    <td>{inspection.evidences.length}</td>
+                    <td>{inspection.inspectorName}</td>
+                    <td>
+                      <button type="button" className="btn btn-ghost btn-sm" onClick={() => handleDownloadPdf(inspection.id)}>
+                        PDF
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

@@ -42,64 +42,69 @@ export function ChecklistHistoryPage() {
   }
 
   return (
-    <section>
-      <h2>Histórico de checklists</h2>
-
-      <div style={{ marginBottom: '1rem' }}>
-        <input
-          placeholder="Filtrar por placa"
-          value={plateFilter}
-          onChange={(event) => setPlateFilter(event.target.value)}
-        />
-        <button type="button" onClick={() => load(plateFilter)} style={{ marginLeft: '0.5rem' }}>
-          Filtrar
-        </button>
+    <div className="stack">
+      <div className="row-between">
+        <h2>Histórico de checklists</h2>
+        <div className="row">
+          <input placeholder="Filtrar por placa" value={plateFilter} onChange={(event) => setPlateFilter(event.target.value)} />
+          <button type="button" className="btn btn-secondary" onClick={() => load(plateFilter)}>
+            Filtrar
+          </button>
+        </div>
       </div>
 
       {error && (
-        <p role="alert" style={{ color: 'crimson' }}>
+        <p role="alert" className="text-error">
           {error}
         </p>
       )}
 
       {loading && <p>Carregando...</p>}
 
-      {!loading && checklists.length === 0 && <p>Nenhum checklist encontrado.</p>}
+      <div className="card" style={{ padding: 0 }}>
+        {!loading && checklists.length === 0 && (
+          <p style={{ padding: 'var(--space-5)' }}>Nenhum checklist encontrado.</p>
+        )}
 
-      {!loading && checklists.length > 0 && (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #ccc' }}>
-              <th>Data</th>
-              <th>Placa</th>
-              <th>Motorista</th>
-              <th>ONU</th>
-              <th>Inspetor</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {checklists.map((checklist) => (
-              <tr key={checklist.id} style={{ borderBottom: '1px solid #eee' }}>
-                <td>{new Date(checklist.createdAt).toLocaleString('pt-BR')}</td>
-                <td>{checklist.vehiclePlate}</td>
-                <td>{checklist.driverName}</td>
-                <td>{checklist.unNumber}</td>
-                <td>{checklist.inspectorName}</td>
-                <td style={{ color: checklist.status === 'compliant' ? 'green' : 'crimson' }}>
-                  {checklist.status === 'compliant' ? 'CONFORME' : 'NÃO CONFORME'}
-                </td>
-                <td>
-                  <button type="button" onClick={() => handleDownloadPdf(checklist.id)}>
-                    PDF
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </section>
+        {!loading && checklists.length > 0 && (
+          <div className="table-wrap">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Placa</th>
+                  <th>Motorista</th>
+                  <th>ONU</th>
+                  <th>Inspetor</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {checklists.map((checklist) => (
+                  <tr key={checklist.id}>
+                    <td>{new Date(checklist.createdAt).toLocaleString('pt-BR')}</td>
+                    <td>{checklist.vehiclePlate}</td>
+                    <td>{checklist.driverName}</td>
+                    <td>{checklist.unNumber}</td>
+                    <td>{checklist.inspectorName}</td>
+                    <td>
+                      <span className={`badge ${checklist.status === 'compliant' ? 'badge-good' : 'badge-critical'}`}>
+                        {checklist.status === 'compliant' ? 'Conforme' : 'Não conforme'}
+                      </span>
+                    </td>
+                    <td>
+                      <button type="button" className="btn btn-ghost btn-sm" onClick={() => handleDownloadPdf(checklist.id)}>
+                        PDF
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

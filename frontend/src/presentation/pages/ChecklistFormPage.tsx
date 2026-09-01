@@ -127,21 +127,23 @@ export function ChecklistFormPage() {
 
   if (result) {
     return (
-      <section>
+      <div className="card">
         <h2>Checklist enviado</h2>
-        <p>
+        <p style={{ margin: 'var(--space-3) 0' }}>
           Status geral:{' '}
-          <strong style={{ color: result.status === 'compliant' ? 'green' : 'crimson' }}>
-            {result.status === 'compliant' ? 'CONFORME' : 'NÃO CONFORME'}
-          </strong>
+          <span className={`badge ${result.status === 'compliant' ? 'badge-good' : 'badge-critical'}`}>
+            {result.status === 'compliant' ? 'Conforme' : 'Não conforme'}
+          </span>
         </p>
-        <button type="button" onClick={() => handleDownloadPdf(result.id)}>
-          Baixar PDF
-        </button>
-        <button type="button" onClick={handleNewChecklist} style={{ marginLeft: '0.75rem' }}>
-          Novo checklist
-        </button>
-      </section>
+        <div className="row" style={{ marginTop: 'var(--space-4)' }}>
+          <button type="button" className="btn btn-primary" onClick={() => handleDownloadPdf(result.id)}>
+            Baixar PDF
+          </button>
+          <button type="button" className="btn btn-secondary" onClick={handleNewChecklist}>
+            Novo checklist
+          </button>
+        </div>
+      </div>
     );
   }
 
@@ -150,45 +152,51 @@ export function ChecklistFormPage() {
   }
 
   return (
-    <section>
-      <fieldset>
-        <legend>Dados do transporte</legend>
-        <div>
-          <label htmlFor="vehiclePlate">Placa do veículo</label>
-          <br />
-          <input
-            id="vehiclePlate"
-            value={vehiclePlate}
-            onChange={(event) => setVehiclePlate(event.target.value)}
-            required
-          />
+    <div className="stack">
+      <div className="card">
+        <h3 style={{ marginBottom: 'var(--space-4)' }}>Dados do transporte</h3>
+        <div className="row" style={{ alignItems: 'flex-start' }}>
+          <div className="field" style={{ flex: 1, minWidth: 160 }}>
+            <label className="field-label" htmlFor="vehiclePlate">
+              Placa do veículo
+            </label>
+            <input
+              id="vehiclePlate"
+              value={vehiclePlate}
+              onChange={(event) => setVehiclePlate(event.target.value)}
+              required
+            />
+          </div>
+          <div className="field" style={{ flex: 1, minWidth: 160 }}>
+            <label className="field-label" htmlFor="driverName">
+              Motorista
+            </label>
+            <input
+              id="driverName"
+              value={driverName}
+              onChange={(event) => setDriverName(event.target.value)}
+              required
+            />
+          </div>
+          <div className="field" style={{ flex: 1, minWidth: 160 }}>
+            <label className="field-label" htmlFor="driverCnh">
+              CNH do motorista
+            </label>
+            <input
+              id="driverCnh"
+              value={driverCnh}
+              onChange={(event) => setDriverCnh(event.target.value)}
+              required
+            />
+          </div>
+          <div className="field" style={{ flex: 1, minWidth: 160 }}>
+            <label className="field-label" htmlFor="unNumber">
+              Número ONU
+            </label>
+            <input id="unNumber" value={unNumber} onChange={(event) => setUnNumber(event.target.value)} required />
+          </div>
         </div>
-        <div style={{ marginTop: '0.5rem' }}>
-          <label htmlFor="driverName">Motorista</label>
-          <br />
-          <input
-            id="driverName"
-            value={driverName}
-            onChange={(event) => setDriverName(event.target.value)}
-            required
-          />
-        </div>
-        <div style={{ marginTop: '0.5rem' }}>
-          <label htmlFor="driverCnh">CNH do motorista</label>
-          <br />
-          <input
-            id="driverCnh"
-            value={driverCnh}
-            onChange={(event) => setDriverCnh(event.target.value)}
-            required
-          />
-        </div>
-        <div style={{ marginTop: '0.5rem' }}>
-          <label htmlFor="unNumber">Número ONU</label>
-          <br />
-          <input id="unNumber" value={unNumber} onChange={(event) => setUnNumber(event.target.value)} required />
-        </div>
-      </fieldset>
+      </div>
 
       {CATEGORY_ORDER.map((category) => {
         const categoryItems = items.filter((item) => item.category === category);
@@ -197,54 +205,59 @@ export function ChecklistFormPage() {
         }
 
         return (
-          <fieldset key={category} style={{ marginTop: '1rem' }}>
-            <legend>{CHECKLIST_CATEGORY_LABEL[category]}</legend>
+          <div key={category} className="card">
+            <h3 style={{ marginBottom: 'var(--space-2)' }}>{CHECKLIST_CATEGORY_LABEL[category]}</h3>
             {categoryItems.map((item) => (
-              <div key={item.id} style={{ marginBottom: '0.75rem' }}>
-                <strong>{item.code}</strong> {item.description}
-                <div>
-                  {ANSWER_OPTIONS.map((option) => (
-                    <label key={option} style={{ marginRight: '1rem' }}>
-                      <input
-                        type="radio"
-                        name={`answer-${item.id}`}
-                        checked={answers[item.id]?.answer === option}
-                        onChange={() => updateAnswer(item.id, { answer: option })}
-                      />{' '}
-                      {ANSWER_LABEL[option]}
-                    </label>
-                  ))}
+              <div key={item.id} className="checklist-item">
+                <div className="checklist-item-text">
+                  <span className="checklist-item-code">{item.code}</span>
+                  {item.description}
+                </div>
+                <div className="row">
+                  <div className="segmented">
+                    {ANSWER_OPTIONS.map((option) => (
+                      <div key={option} className={`segmented-option${option === 'no' ? ' answer-no' : ''}`}>
+                        <input
+                          type="radio"
+                          id={`answer-${item.id}-${option}`}
+                          name={`answer-${item.id}`}
+                          checked={answers[item.id]?.answer === option}
+                          onChange={() => updateAnswer(item.id, { answer: option })}
+                        />
+                        <label htmlFor={`answer-${item.id}-${option}`}>{ANSWER_LABEL[option]}</label>
+                      </div>
+                    ))}
+                  </div>
                   <input
+                    className="note-input"
                     placeholder="Observação (opcional)"
                     value={answers[item.id]?.note ?? ''}
                     onChange={(event) => updateAnswer(item.id, { note: event.target.value })}
-                    style={{ marginLeft: '0.5rem' }}
                   />
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(event) => handlePhotoSelected(item.id, event)}
                     disabled={answers[item.id]?.uploadingPhoto}
-                    style={{ marginLeft: '0.5rem' }}
                   />
-                  {answers[item.id]?.uploadingPhoto && <span> enviando...</span>}
-                  {answers[item.id]?.photoUrl && <span> ✓ foto anexada</span>}
+                  {answers[item.id]?.uploadingPhoto && <span className="upload-status">enviando...</span>}
+                  {answers[item.id]?.photoUrl && <span className="upload-status is-done">✓ foto anexada</span>}
                 </div>
               </div>
             ))}
-          </fieldset>
+          </div>
         );
       })}
 
       {error && (
-        <p role="alert" style={{ color: 'crimson' }}>
+        <p role="alert" className="text-error">
           {error}
         </p>
       )}
 
-      <button type="button" onClick={handleSubmit} disabled={submitting} style={{ marginTop: '1rem' }}>
+      <button type="button" className="btn btn-primary" onClick={handleSubmit} disabled={submitting}>
         {submitting ? 'Enviando...' : 'Enviar checklist'}
       </button>
-    </section>
+    </div>
   );
 }

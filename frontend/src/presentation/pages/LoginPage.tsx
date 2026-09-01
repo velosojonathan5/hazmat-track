@@ -23,46 +23,56 @@ export function LoginPage() {
   }
 
   return (
-    <main style={{ maxWidth: 360, margin: '4rem auto' }}>
-      <h1>HazmatTrack</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">E-mail</label>
-          <br />
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </div>
-        <div style={{ marginTop: '0.75rem' }}>
-          <label htmlFor="password">Senha</label>
-          <br />
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
+    <main className="centered-shell">
+      <div className="login-card">
+        <div className="brand" style={{ marginBottom: 'var(--space-5)' }}>
+          <span className="brand-mark">HT</span>
+          <h1>HazmatTrack</h1>
         </div>
 
-        {error && (
-          <p role="alert" style={{ color: 'crimson' }}>
-            {error}
-          </p>
-        )}
+        <div className="card">
+          <form onSubmit={handleSubmit} className="stack">
+            <div className="field">
+              <label className="field-label" htmlFor="email">
+                E-mail
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </div>
+            <div className="field">
+              <label className="field-label" htmlFor="password">
+                Senha
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+            </div>
 
-        <button type="submit" disabled={submitting} style={{ marginTop: '1rem' }}>
-          {submitting ? 'Entrando...' : 'Entrar'}
-        </button>
-      </form>
+            {error && (
+              <p role="alert" className="text-error">
+                {error}
+              </p>
+            )}
 
-      <p style={{ marginTop: '2rem', fontSize: '0.85rem', color: 'gray' }}>
-        Demo: inspector@hazmattrack.demo / inspector123 ou manager@hazmattrack.demo / manager123
-      </p>
+            <button type="submit" className="btn btn-primary" disabled={submitting}>
+              {submitting ? 'Entrando...' : 'Entrar'}
+            </button>
+          </form>
+        </div>
+
+        <p className="login-hint">
+          Demo: inspector@hazmattrack.demo / inspector123 ou manager@hazmattrack.demo / manager123
+        </p>
+      </div>
     </main>
   );
 }

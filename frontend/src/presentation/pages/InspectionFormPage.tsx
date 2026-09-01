@@ -139,108 +139,119 @@ export function InspectionFormPage() {
 
   if (result) {
     return (
-      <section>
+      <div className="card">
         <h2>Vistoria registrada</h2>
-        <p>{result.evidences.length} evidência(s) anexada(s).</p>
-        <button type="button" onClick={() => handleDownloadPdf(result.id)}>
-          Baixar laudo em PDF
-        </button>
-        <button type="button" onClick={handleNewInspection} style={{ marginLeft: '0.75rem' }}>
-          Nova vistoria
-        </button>
-      </section>
+        <p style={{ margin: 'var(--space-3) 0' }}>{result.evidences.length} evidência(s) anexada(s).</p>
+        <div className="row" style={{ marginTop: 'var(--space-4)' }}>
+          <button type="button" className="btn btn-primary" onClick={() => handleDownloadPdf(result.id)}>
+            Baixar laudo em PDF
+          </button>
+          <button type="button" className="btn btn-secondary" onClick={handleNewInspection}>
+            Nova vistoria
+          </button>
+        </div>
+      </div>
     );
   }
 
+  const locationDotClass = coords ? 'is-ready' : locationError ? 'is-error' : '';
+
   return (
-    <section>
-      <fieldset>
-        <legend>Dados da vistoria</legend>
-        <div>
-          <label htmlFor="vehiclePlate">Placa do veículo</label>
-          <br />
-          <input
-            id="vehiclePlate"
-            value={vehiclePlate}
-            onChange={(event) => setVehiclePlate(event.target.value)}
-            required
-          />
+    <div className="stack">
+      <div className="card">
+        <h3 style={{ marginBottom: 'var(--space-4)' }}>Dados da vistoria</h3>
+        <div className="row" style={{ alignItems: 'flex-start' }}>
+          <div className="field" style={{ flex: 1, minWidth: 160 }}>
+            <label className="field-label" htmlFor="vehiclePlate">
+              Placa do veículo
+            </label>
+            <input
+              id="vehiclePlate"
+              value={vehiclePlate}
+              onChange={(event) => setVehiclePlate(event.target.value)}
+              required
+            />
+          </div>
+          <div className="field" style={{ flex: 1, minWidth: 160 }}>
+            <label className="field-label" htmlFor="unNumber">
+              Número ONU
+            </label>
+            <input id="unNumber" value={unNumber} onChange={(event) => setUnNumber(event.target.value)} required />
+          </div>
         </div>
-        <div style={{ marginTop: '0.5rem' }}>
-          <label htmlFor="unNumber">Número ONU</label>
-          <br />
-          <input id="unNumber" value={unNumber} onChange={(event) => setUnNumber(event.target.value)} required />
-        </div>
-        <p style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>
+        <div className="location-status" style={{ marginTop: 'var(--space-4)' }}>
+          <span className={`location-dot ${locationDotClass}`} />
           {coords
             ? `Localização capturada: ${coords.latitude.toFixed(5)}, ${coords.longitude.toFixed(5)}`
             : locationError
               ? locationError
               : 'Obtendo localização...'}
-        </p>
-      </fieldset>
+        </div>
+      </div>
 
-      <fieldset style={{ marginTop: '1rem' }}>
-        <legend>Escala de Ringelmann (densidade de fumaça, opcional)</legend>
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+      <div className="card">
+        <h3 style={{ marginBottom: 'var(--space-1)' }}>Escala de Ringelmann</h3>
+        <p className="field-hint" style={{ marginBottom: 'var(--space-4)' }}>
+          Densidade de fumaça no escapamento (opcional)
+        </p>
+        <div className="ringelmann-grid">
           {RINGELMANN_GRADES.map((grade) => (
-            <label key={grade} style={{ textAlign: 'center', cursor: 'pointer' }}>
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  margin: '0 auto 0.25rem',
-                  border: ringelmannGrade === grade ? '2px solid #333' : '1px solid #ccc',
-                  backgroundColor: `rgba(0,0,0,${grade / 5})`,
-                }}
-              />
+            <label
+              key={grade}
+              className={`ringelmann-option${ringelmannGrade === grade ? ' is-selected' : ''}`}
+            >
+              <div className="ringelmann-swatch" style={{ backgroundColor: `rgba(0,0,0,${grade / 5})` }} />
               <input
                 type="radio"
                 name="ringelmann"
                 checked={ringelmannGrade === grade}
                 onChange={() => setRingelmannGrade(grade)}
-              />{' '}
-              grau {grade} ({RINGELMANN_DENSITY[grade]})
+              />
+              <div className="ringelmann-caption">
+                Grau {grade}
+                <br />
+                {RINGELMANN_DENSITY[grade]}
+              </div>
             </label>
           ))}
         </div>
-      </fieldset>
+      </div>
 
-      <fieldset style={{ marginTop: '1rem' }}>
-        <legend>Evidências (foto/vídeo)</legend>
+      <div className="card">
+        <h3 style={{ marginBottom: 'var(--space-4)' }}>Evidências (foto/vídeo)</h3>
         <input type="file" accept="image/*,video/*" onChange={handleFileSelected} disabled={uploading} />
-        {uploading && <p>Enviando arquivo...</p>}
-        <ul>
-          {evidences.map((evidence, index) => (
-            <li key={evidence.storageKey}>
-              [{evidence.type}] {evidence.url}{' '}
-              <button type="button" onClick={() => removeEvidence(index)}>
-                Remover
-              </button>
-            </li>
-          ))}
-        </ul>
-      </fieldset>
+        {uploading && <p className="upload-status" style={{ marginTop: 'var(--space-2)' }}>Enviando arquivo...</p>}
+        {evidences.length > 0 && (
+          <div className="chip-list" style={{ marginTop: 'var(--space-4)' }}>
+            {evidences.map((evidence, index) => (
+              <div key={evidence.storageKey} className="chip">
+                <span className="badge badge-neutral">{evidence.type === 'photo' ? 'Foto' : 'Vídeo'}</span>
+                <a className="chip-link" href={evidence.url} target="_blank" rel="noreferrer">
+                  {evidence.url}
+                </a>
+                <button type="button" className="btn btn-ghost btn-sm" onClick={() => removeEvidence(index)}>
+                  Remover
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-      <fieldset style={{ marginTop: '1rem' }}>
-        <legend>Observações</legend>
-        <textarea
-          value={comments}
-          onChange={(event) => setComments(event.target.value)}
-          rows={3}
-          style={{ width: '100%' }}
-        />
-      </fieldset>
+      <div className="card">
+        <h3 style={{ marginBottom: 'var(--space-4)' }}>Observações</h3>
+        <textarea value={comments} onChange={(event) => setComments(event.target.value)} rows={3} style={{ width: '100%' }} />
+      </div>
 
       {error && (
-        <p role="alert" style={{ color: 'crimson' }}>
+        <p role="alert" className="text-error">
           {error}
         </p>
       )}
 
-      <button type="button" onClick={handleSubmit} disabled={submitting} style={{ marginTop: '1rem' }}>
+      <button type="button" className="btn btn-primary" onClick={handleSubmit} disabled={submitting}>
         {submitting ? 'Enviando...' : 'Registrar vistoria'}
       </button>
-    </section>
+    </div>
   );
 }

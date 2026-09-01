@@ -19,7 +19,7 @@ src/
     pages/              # componentes React que consomem os casos de uso
 ```
 
-A feature `health` é a referência dessa convenção: `domain/health` define o port, `application/health` tem o caso de uso, `infrastructure/health` implementa o port via HTTP, e `presentation/pages/HealthPage.tsx` consome o caso de uso e renderiza o resultado. As próximas telas (checklist, fiscalização, dashboard — ver `spec/escopo-mvp.md`) devem seguir o mesmo padrão.
+A feature `checklist` é um bom exemplo dessa convenção: `domain/checklist` define os tipos e o port, `application/checklist` tem os casos de uso, `infrastructure/checklist` implementa o port via HTTP, e `presentation/pages/ChecklistFormPage.tsx` consome os casos de uso e renderiza o resultado. As features `auth`, `inspection` e `dashboard` seguem o mesmo padrão.
 
 ## Rodando localmente
 
