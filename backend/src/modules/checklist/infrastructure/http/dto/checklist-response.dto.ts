@@ -10,7 +10,16 @@ export class ChecklistResponseDto {
   vehicleId!: string;
 
   @ApiProperty()
+  vehiclePlate!: string;
+
+  @ApiProperty()
   driverId!: string;
+
+  @ApiProperty()
+  driverName!: string;
+
+  @ApiProperty()
+  driverCnh!: string;
 
   @ApiProperty()
   unNumber!: string;

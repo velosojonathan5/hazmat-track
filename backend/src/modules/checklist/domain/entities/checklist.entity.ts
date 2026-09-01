@@ -8,7 +8,10 @@ export enum ChecklistStatus {
 export interface Checklist {
   id: string;
   vehicleId: string;
+  vehiclePlate: string;
   driverId: string;
+  driverName: string;
+  driverCnh: string;
   unNumber: string;
   inspectorId: string;
   inspectorName: string;

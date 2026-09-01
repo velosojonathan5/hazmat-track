@@ -24,7 +24,10 @@ export class TypeOrmChecklistRepository implements ChecklistRepository {
   async create(input: NewChecklist): Promise<Checklist> {
     const entity = this.repository.create({
       vehicleId: input.vehicleId,
+      vehiclePlate: input.vehiclePlate,
       driverId: input.driverId,
+      driverName: input.driverName,
+      driverCnh: input.driverCnh,
       unNumber: input.unNumber,
       inspectorId: input.inspectorId,
       inspectorName: input.inspectorName,
@@ -83,7 +86,10 @@ export class TypeOrmChecklistRepository implements ChecklistRepository {
     return {
       id: entity.id,
       vehicleId: entity.vehicleId,
+      vehiclePlate: entity.vehiclePlate,
       driverId: entity.driverId,
+      driverName: entity.driverName,
+      driverCnh: entity.driverCnh,
       unNumber: entity.unNumber,
       inspectorId: entity.inspectorId,
       inspectorName: entity.inspectorName,

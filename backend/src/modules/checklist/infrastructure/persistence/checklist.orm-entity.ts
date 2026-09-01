@@ -10,8 +10,17 @@ export class ChecklistOrmEntity {
   @Column({ name: 'vehicle_id' })
   vehicleId!: string;
 
+  @Column({ name: 'vehicle_plate' })
+  vehiclePlate!: string;
+
   @Column({ name: 'driver_id' })
   driverId!: string;
+
+  @Column({ name: 'driver_name' })
+  driverName!: string;
+
+  @Column({ name: 'driver_cnh' })
+  driverCnh!: string;
 
   @Column({ name: 'un_number' })
   unNumber!: string;

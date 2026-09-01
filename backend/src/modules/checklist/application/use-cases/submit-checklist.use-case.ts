@@ -63,7 +63,10 @@ export class SubmitChecklistUseCase {
 
     const checklist = await this.checklistRepository.create({
       vehicleId: vehicle.id,
+      vehiclePlate: vehicle.plate,
       driverId: driver.id,
+      driverName: driver.name,
+      driverCnh: driver.cnh,
       unNumber: input.unNumber,
       inspectorId: input.inspectorId,
       inspectorName: input.inspectorName,

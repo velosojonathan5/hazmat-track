@@ -12,7 +12,10 @@ export interface NewChecklistAnswer {
 
 export interface NewChecklist {
   vehicleId: string;
+  vehiclePlate: string;
   driverId: string;
+  driverName: string;
+  driverCnh: string;
   unNumber: string;
   inspectorId: string;
   inspectorName: string;

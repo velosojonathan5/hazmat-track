@@ -50,7 +50,10 @@ function buildUseCase(overrides: {
         overrides.createdChecklist ?? {
           id: 'checklist-1',
           vehicleId: input.vehicleId,
+          vehiclePlate: input.vehiclePlate,
           driverId: input.driverId,
+          driverName: input.driverName,
+          driverCnh: input.driverCnh,
           unNumber: input.unNumber,
           inspectorId: input.inspectorId,
           inspectorName: input.inspectorName,

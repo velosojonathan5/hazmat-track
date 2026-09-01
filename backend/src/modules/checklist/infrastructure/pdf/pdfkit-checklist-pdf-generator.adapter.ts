@@ -16,7 +16,7 @@ const ANSWER_LABEL: Record<AnswerValue, string> = {
 @Injectable()
 export class PdfKitChecklistPdfGenerator implements ChecklistPdfGenerator {
   generate(data: ChecklistPdfData): Promise<Buffer> {
-    const { checklist, items, vehicle, driver } = data;
+    const { checklist, items } = data;
     const itemsById = new Map(items.map((item) => [item.id, item]));
 
     return new Promise((resolve, reject) => {
@@ -31,8 +31,8 @@ export class PdfKitChecklistPdfGenerator implements ChecklistPdfGenerator {
       doc.moveDown();
 
       doc.fontSize(10);
-      doc.text(`Veículo (placa): ${vehicle.plate}`);
-      doc.text(`Motorista: ${driver.name} (CNH ${driver.cnh})`);
+      doc.text(`Veículo (placa): ${checklist.vehiclePlate}`);
+      doc.text(`Motorista: ${checklist.driverName} (CNH ${checklist.driverCnh})`);
       doc.text(`Número ONU: ${checklist.unNumber}`);
       doc.text(`Inspetor responsável: ${checklist.inspectorName}`);
       doc.text(`Data/hora: ${checklist.createdAt.toLocaleString('pt-BR')}`);
